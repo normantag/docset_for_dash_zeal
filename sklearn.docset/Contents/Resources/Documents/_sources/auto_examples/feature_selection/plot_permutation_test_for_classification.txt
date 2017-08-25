@@ -1,0 +1,136 @@
+
+
+.. _sphx_glr_auto_examples_feature_selection_plot_permutation_test_for_classification.py:
+
+
+=================================================================
+Test with permutations the significance of a classification score
+=================================================================
+
+In order to test if a classification score is significative a technique
+in repeating the classification procedure after randomizing, permuting,
+the labels. The p-value is then given by the percentage of runs for
+which the score obtained is greater than the classification score
+obtained in the first place.
+
+
+
+.. code-block:: python
+
+
+    # Author:  Alexandre Gramfort <alexandre.gramfort@inria.fr>
+    # License: BSD 3 clause
+
+    print(__doc__)
+
+    import numpy as np
+    import matplotlib.pyplot as plt
+
+    from sklearn.svm import SVC
+    from sklearn.model_selection import StratifiedKFold
+    from sklearn.model_selection import permutation_test_score
+    from sklearn import datasets
+
+
+
+
+
+.. code-block:: pytb
+
+    Traceback (most recent call last):
+      File "H:\e\analyzer\ml\scikit-learn-0.18.1\doc\sphinxext\sphinx_gallery\gen_rst.py", line 467, in execute_script
+        exec(code_block, example_globals)
+      File "<string>", line 11, in <module>
+    ImportError: No module named model_selection
+
+
+
+
+Loading a dataset
+
+
+.. code-block:: python
+
+    iris = datasets.load_iris()
+    X = iris.data
+    y = iris.target
+    n_classes = np.unique(y).size
+
+    # Some noisy data not correlated
+    random = np.random.RandomState(seed=0)
+    E = random.normal(size=(len(X), 2200))
+
+    # Add noisy data to the informative features for make the task harder
+    X = np.c_[X, E]
+
+    svm = SVC(kernel='linear')
+    cv = StratifiedKFold(2)
+
+    score, permutation_scores, pvalue = permutation_test_score(
+        svm, X, y, scoring="accuracy", cv=cv, n_permutations=100, n_jobs=1)
+
+    print("Classification score %s (pvalue : %s)" % (score, pvalue))
+
+
+
+
+.. code-block:: pytb
+
+    Traceback (most recent call last):
+      File "H:\e\analyzer\ml\scikit-learn-0.18.1\doc\sphinxext\sphinx_gallery\gen_rst.py", line 467, in execute_script
+        exec(code_block, example_globals)
+      File "<string>", line 1, in <module>
+    NameError: name 'datasets' is not defined
+
+
+
+
+View histogram of permutation scores
+
+
+.. code-block:: python
+
+    plt.hist(permutation_scores, 20, label='Permutation scores')
+    ylim = plt.ylim()
+    # BUG: vlines(..., linestyle='--') fails on older versions of matplotlib
+    #plt.vlines(score, ylim[0], ylim[1], linestyle='--',
+    #          color='g', linewidth=3, label='Classification Score'
+    #          ' (pvalue %s)' % pvalue)
+    #plt.vlines(1.0 / n_classes, ylim[0], ylim[1], linestyle='--',
+    #          color='k', linewidth=3, label='Luck')
+    plt.plot(2 * [score], ylim, '--g', linewidth=3,
+             label='Classification Score'
+             ' (pvalue %s)' % pvalue)
+    plt.plot(2 * [1. / n_classes], ylim, '--k', linewidth=3, label='Luck')
+
+    plt.ylim(ylim)
+    plt.legend()
+    plt.xlabel('Score')
+    plt.show()
+
+
+
+.. code-block:: pytb
+
+    Traceback (most recent call last):
+      File "H:\e\analyzer\ml\scikit-learn-0.18.1\doc\sphinxext\sphinx_gallery\gen_rst.py", line 467, in execute_script
+        exec(code_block, example_globals)
+      File "<string>", line 1, in <module>
+    NameError: name 'permutation_scores' is not defined
+
+
+
+
+**Total running time of the script:**
+(0 minutes 0.000 seconds)
+
+
+
+.. container:: sphx-glr-download
+
+    **Download Python source code:** :download:`plot_permutation_test_for_classification.py <plot_permutation_test_for_classification.py>`
+
+
+.. container:: sphx-glr-download
+
+    **Download IPython notebook:** :download:`plot_permutation_test_for_classification.ipynb <plot_permutation_test_for_classification.ipynb>`
