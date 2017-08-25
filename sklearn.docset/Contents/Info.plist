@@ -3,6 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleIdentifier</key>
+	<string>sklearn</string>
 	<key>CFBundleName</key>
 	<string>sklearn</string>
 	<key>DashDocSetFamily</key>
