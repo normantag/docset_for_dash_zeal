@@ -56,6 +56,7 @@ $ doc2dash --name sklearn --icon flask-logo.png -d path/to/output scikit-learn-0
 我已经编译好了部分docset，存放在本仓库中，目前收录的有：
 
 - scikit learn v0.18.1 http://scikit-learn.org
+- scikit learn cn v0.17 中文翻译版 基于 https://github.com/lzjqsdd/scikit-learn-doc-cn
 
 
 
